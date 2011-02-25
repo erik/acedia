@@ -1,9 +1,9 @@
-megs: 32
-romimage: file=/usr/share/bochs/BIOS-bochs-latest, address=0xf0000
-vgaromimage: /usr/share/bochs/VGABIOS-elpin-2.40
-floppya: 1_44=/dev/loop0, status=inserted
-boot: a
-log: bochsout.txt
-mouse: enabled=0
-clock: sync=realtime
-cpu: ips=500000 
+memory: host=32, guest=32
+romimage: file="/usr/share/bochs/BIOS-bochs-latest"
+vgaromimage: file="/usr/share/bochs/VGABIOS-lgpl-latest"
+boot: floppy, cdrom
+floppy_bootsig_check: disabled=0
+# no floppya
+# no floppyb
+ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
+ata0-master: type=cdrom, path="build/iso/acedia.iso", status=inserted, biosdetect=auto, model="Generic 1234"

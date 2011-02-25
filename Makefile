@@ -27,8 +27,25 @@ clean:
 distclean: clean
 	rm -rf $(BUILDDIR)
 
+iso: $(BIN_DIRS)
+	@genisoimage -graft-points -R 				\
+		-b boot/grub/stage2_eltorito 			\
+		-no-emul-boot 					\
+		-boot-load-size 4 -boot-info-table 		\
+		-o $(BUILDDIR)/iso/acedia.iso 			\
+		boot/kernel=$(BUILDDIR)/bin/kernel		\
+		boot/grub/menu.lst=boot/grub/menu.lst		\
+		boot/grub/stage2_eltorito=boot/grub/stage2_eltorito
+
+qemu: all iso
+	@qemu -cdrom build/iso/acedia.iso
+
+bochs: all iso
+	@bochs -q
+
 mkdirs:
 	@ mkdir -p $(BUILDDIR)/include
 	@ mkdir -p $(BUILDDIR)/bin
+	@ mkdir -p $(BUILDDIR)/iso
 
 .PHONY: $(BIN_DIRS) clean distclean mkdirs
