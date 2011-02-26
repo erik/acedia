@@ -6,17 +6,17 @@ SOURCES += $(patsubst %.s,%.o,$(shell find . -name "*.s"))
 SUBDIR := kernel
 
 CFLAGS := -Iinclude/ -I$(BUILDDIR)/$(SUBDIR)/include $(CFLAGS)
-LDFLAGS := -Tlink.ld -melf_i386
+LDFLAGS := -Tlink.ld -melf_i386 $(BUILDDIR)/lib/libc.a
 ASFLAGS := -felf
 
 all: kernel
 
 kernel: $(SOURCES)
-	$(LD) -o kernel $(SOURCES) $(LDFLAGS)
-	mv kernel $(BUILDDIR)/bin
+	@ $(LD) -o kernel $(SOURCES) $(LDFLAGS)
+	@ mv kernel $(BUILDDIR)/bin
 
 %.o: %.s
-	$(AS) $(ASFLAGS) $< -o $@
+	@ $(AS) $(ASFLAGS) $< -o $@
 
 %.o: %.c
 	echo "  CC" $(SUBDIR)/$<

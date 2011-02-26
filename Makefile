@@ -3,19 +3,28 @@ BUILDDIR := $(PWD)/build
 CC := gcc -m32
 LD := ld
 AS := nasm
+AR := ar
 
-CFLAGS := -Wall -Werror -Wextra -m32
-CFLAGS += -nostdlib -fno-builtin -fno-stack-protector 
+ARFLAGS := rcs
+
+CFLAGS := -Wall -Werror -Wextra
+CFLAGS += -nostdlib -nostdinc -fno-builtin -fno-stack-protector 
 CFLAGS += -Wno-unused-parameter -Wno-unused-function
+CFLAGS += -I$(BUILDDIR)/include
 
 LDFLAGS := -T$(BUILDDIR)/include/link.ld -static
 LDFLAGS += -nostdlib -melf_i386
 
 BIN_DIRS := kernel
+LIB_DIRS := libc
 
-export BUILDDIR CC LD AS CFLAGS LDFLAGS
+export BUILDDIR CC LD AS CFLAGS LDFLAGS AR ARFLAGS
 
-all: mkdirs $(BIN_DIRS)
+all: mkdirs $(LIB_DIRS) $(BIN_DIRS)
+
+$(LIB_DIRS):
+	@echo "make" $@
+	@make -s -C $@
 
 $(BIN_DIRS):
 	@echo "make" $@
@@ -46,6 +55,7 @@ bochs: all iso
 mkdirs:
 	@ mkdir -p $(BUILDDIR)/include
 	@ mkdir -p $(BUILDDIR)/bin
+	@ mkdir -p $(BUILDDIR)/lib
 	@ mkdir -p $(BUILDDIR)/iso
 
-.PHONY: $(BIN_DIRS) clean distclean mkdirs
+.PHONY: $(BIN_DIRS) $(LIB_DIRS) clean distclean mkdirs qemu bochs iso
