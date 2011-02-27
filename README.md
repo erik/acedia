@@ -1,3 +1,5 @@
 #Acedia
+An experiment of an operating system in development.
 
-Experimental OS
+#License
+Acedia is licensed under the terms of the ISC License. See LICENSE.
