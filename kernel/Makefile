@@ -1,7 +1,7 @@
 # kernel Makefile
 
 SOURCES := $(patsubst %.c,%.o,$(shell find . -name "*.c"))
-SOURCES += $(patsubst %.s,%.o,$(shell find . -name "*.s"))
+SOURCES += $(patsubst %.s,%.s.o,$(shell find . -name "*.s"))
 
 HEADERS := $(shell find . -name "*.h")
 
@@ -21,7 +21,7 @@ $(HEADERS):
 	@ echo "  CP $(SUBDIR)/$@ => build/$@"
 	@ cp $@ $(BUILDDIR)/include
 
-%.o: %.s
+%.s.o: %.s
 	echo "  AS" $(SUBDIR)/$<
 	@ $(AS) $(ASFLAGS) $< -o $@
 

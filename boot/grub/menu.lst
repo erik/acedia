@@ -1,4 +1,5 @@
 default 0
+timeout 0
   
 title Acedia
 kernel /boot/kernel

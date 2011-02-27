@@ -50,7 +50,7 @@ void kscroll();
 void kputc(unsigned char c);
 
 /* write string */
-void kputs(char* c);
+void kputs(const char* c);
 
 /* formatted print */
 //void kprintf(char*f

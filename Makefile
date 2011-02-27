@@ -48,7 +48,7 @@ iso: $(BIN_DIRS)
 		boot/grub/stage2_eltorito=boot/grub/stage2_eltorito
 
 qemu: all iso
-	@qemu -cdrom build/iso/acedia.iso
+	@qemu -serial stdio -cdrom build/iso/acedia.iso
 
 bochs: all iso
 	@bochs -q

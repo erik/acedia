@@ -30,3 +30,4 @@ void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t access, ui
   gdt_entries[num].granularity |= gran & 0xF0;
   gdt_entries[num].access      = access;
 }
+

@@ -15,6 +15,7 @@ void kinit_video() {
 }
 
 void kclear() {
+  g_csr.x = g_csr.y = 0;
   unsigned short c = ' ' | g_text_attrib << 8;
 
   int i;
@@ -68,7 +69,7 @@ void kputc(unsigned char c) {
   kscroll();
 }
 
-void kputs(char* c) {
+void kputs(const char* c) {
   char x;
   while((x = *c++) != '\0') {
     kputc(x);
