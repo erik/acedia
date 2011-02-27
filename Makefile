@@ -17,6 +17,7 @@ LDFLAGS += -nostdlib -melf_i386
 
 BIN_DIRS := kernel
 LIB_DIRS := libc
+TEST_DIRS := test
 
 export BUILDDIR CC LD AS CFLAGS LDFLAGS AR ARFLAGS
 

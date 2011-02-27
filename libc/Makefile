@@ -10,17 +10,19 @@ SUBDIR := libc
 CFLAGS += -I$(BUILDDIR)/include
 
 all: $(HEADERS) $(STATIC)
-	@ echo "  $(STATIC) => build/lib"
+	@ echo "  CP $(STATIC) => build/lib"
 	@ cp $(STATIC) $(BUILDDIR)/lib
 
 $(HEADERS):
-	@ echo "  $(SUBDIR)/$@ => build/include/$@"
+	@ echo "  CP $(SUBDIR)/$@ => build/$@"
 	@ cp $@ $(BUILDDIR)/include
 
 $(STATIC): $(SOURCES)
+	@ echo "  AR" $(SUBDIR)/$<
 	@ $(AR) $(ARFLAGS) $(STATIC)  $(SOURCES) 
 
 %.o: %.s
+	@ echo "  AS" $(SUBDIR)/$<
 	@ $(AS) $(ASFLAGS) $< -o $@
 
 %.o: %.c
