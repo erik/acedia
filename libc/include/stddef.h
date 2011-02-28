@@ -20,8 +20,8 @@
 
 #include <stdint.h>
 
-typedef typeof((int*)0 - (int*)0) ptrdiff_t;
-typedef typeof(sizeof(int))       size_t;
+typedef __typeof__((int*)0 - (int*)0) ptrdiff_t;
+typedef __typeof__(sizeof(int))       size_t;
 
 #define NULL ((void*)0)
 

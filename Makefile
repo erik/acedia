@@ -1,13 +1,13 @@
 BUILDDIR := $(PWD)/build
 
-CC := gcc
+CC := clang
 LD := ld
 AS := nasm
 AR := ar
 
 ARFLAGS := rcs
 
-CFLAGS := -Wall -Werror -Wextra
+CFLAGS := -Wall -Werror -Wextra -pedantic -std=c99 -O3
 CFLAGS +=  -nostdinc -fno-builtin -fno-stack-protector -m32 -ffreestanding
 CFLAGS += -Wno-unused-parameter -Wno-unused-function
 CFLAGS += -I$(BUILDDIR)/include

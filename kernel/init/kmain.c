@@ -43,8 +43,6 @@ int kmain(struct multiboot *mboot_ptr) {
     
   }
 
-  int x = 0;
-  x /= x;
   return 0x0;
 } 
 
