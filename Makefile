@@ -1,6 +1,6 @@
 BUILDDIR := $(PWD)/build
 
-CC := gcc -m32
+CC := gcc
 LD := ld
 AS := nasm
 AR := ar
@@ -8,7 +8,7 @@ AR := ar
 ARFLAGS := rcs
 
 CFLAGS := -Wall -Werror -Wextra
-CFLAGS += -nostdlib -nostdinc -fno-builtin -fno-stack-protector 
+CFLAGS +=  -nostdinc -fno-builtin -fno-stack-protector -m32 -ffreestanding
 CFLAGS += -Wno-unused-parameter -Wno-unused-function
 CFLAGS += -I$(BUILDDIR)/include
 

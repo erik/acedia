@@ -43,6 +43,8 @@ int kmain(struct multiboot *mboot_ptr) {
     
   }
 
+  int x = 0;
+  x /= x;
   return 0x0;
 } 
 
@@ -57,7 +59,27 @@ void _khalt(int reason, const char* msg, const char* fcn, const char* file, cons
   ktextcolor(KBLACK, KRED);
   kclear();
   
-  kputs("\n\n\n" STOP_MSG "\n\n");
+#define TEN "          "
+#define TWENTY TEN TEN
+#define THIRTY TEN TWENTY
+#define FIFTY TWENTY THIRTY
+
+  /* RED SCREEN OF CERTAIN DOOM */
+  kputs("Despite your violent" " behavior, the only " TEN "  ####   ####       \n"
+        "thing you've managed" " to break so far is " TEN " ###### ######      \n"
+        "my heart.           " THIRTY                     " #############      \n"
+                                               FIFTY      "  ###########       \n"
+                                               FIFTY      "   #########        \n"
+                                               FIFTY      "    #######         \n"
+                                               FIFTY      "     #####          \n"
+                                               FIFTY      "      ###           \n"
+                                               FIFTY      "       #            \n");
+#undef TEN
+#undef TWENTY
+#undef THIRTY
+#undef FIFTY
+
+  kputs(STOP_MSG "\n\n");
 
   /* this is why I need printf :( */
 

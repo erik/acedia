@@ -70,9 +70,8 @@ void _khalt(int reason, const char* msg, const char* fcn, const char *file, cons
 #define STRING_(x) #x
 #define STRING(x) STRING_(x)
 
-#define kpanic(msg) _khalt(UNHANDLED_EXCEPTION, msg, __FUNCTION__, __FILE__, STRING(__LINE__))
+#define kpanic(msg) _khalt(UNHANDLED_EXCEPTION, msg, __PRETTY_FUNCTION__, __FILE__, STRING(__LINE__))
 #define kassert(cond) if(!cond) { _khalt(ASSERTION_FAILED, #cond,  \
-                                         __FUNCTION__, __FILE__, STRING(__LINE__)); }
+                                         __PRETTY_FUNCTION__, __FILE__, STRING(__LINE__)); }
 
 #endif /* _KERNEL_H_ */
-
