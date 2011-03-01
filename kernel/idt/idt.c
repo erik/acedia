@@ -17,6 +17,8 @@
 
 
 #include "idt.h"
+#include "isr.h"
+#include "irq.h"
 
 void init_idt() {
    idt_ptr.limit = sizeof(idt_entry_t) * 256 -1;
@@ -27,6 +29,7 @@ void init_idt() {
    idt_flush();
 
    init_isr();
+   init_irq();
 
 }
 

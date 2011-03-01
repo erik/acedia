@@ -18,8 +18,6 @@
 #ifndef _IDT_H_
 #define _IDT_H_
 
-#include "isr.h"
-
 #include <stdint.h>
 #include <string.h>
 
@@ -52,6 +50,20 @@ void idt_set_gate(uint8_t, uint32_t, uint16_t, uint8_t);
 
 idt_entry_t idt_entries[256];
 idt_ptr_t   idt_ptr;
+
+// returned to handle_isr, handle_irq, contains register information
+typedef struct regs {
+
+    unsigned int gs, fs, es, ds;      /* pushed the segs last */
+    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;  /* pushed by 'pusha' */
+    unsigned int int_no, err_code;    /* our 'push byte #' and ecodes do this */
+    unsigned int eip, cs, eflags, useresp, ss;   /* pushed by the processor automatically */ 
+} /*
+  uint32_t ds;                  // Data segment selector
+  uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
+  uint32_t int_no, err_code;    // Interrupt number and error code (if applicable)
+  uint32_t eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
+  } */regs_t; 
 
 
 #endif /* _IDT_H_ */

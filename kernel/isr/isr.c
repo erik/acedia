@@ -15,7 +15,6 @@
 */
 
 #include "isr.h"
-#include "idt.h"
 #include "console.h"
 
 char* isr_exceptions[32] = { 
@@ -91,10 +90,11 @@ void init_isr() {
   idt_set_gate(31, (uint32_t)isr31 , 0x08, 0x8E);
 }
 
-void handle_isr(regs_t regs) {
+void handle_isr(regs_t* regs) {
 
-  if(regs.int_no < 32) {
-    kpanic(isr_exceptions[regs.int_no]);
+  // exception
+  if(regs->int_no < 32) {
+    kpanic(isr_exceptions[regs->int_no]);
   }
 }
 

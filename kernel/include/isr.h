@@ -21,20 +21,13 @@
 #include <stdint.h>
 
 #include "kernel.h"
-
-// returned to handle_isr, contains register information
-typedef struct regs {
-  uint32_t ds;                  // Data segment selector
-  uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
-  uint32_t int_no, err_code;    // Interrupt number and error code (if applicable)
-  uint32_t eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
-} regs_t; 
+#include "idt.h"
 
 // set up ISRs
 void init_isr();
 
 // handle an interrupt
-void handle_isr(regs_t regs);
+void handle_isr(regs_t* regs);
 
 extern char* isr_exceptions[32];
 

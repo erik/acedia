@@ -83,6 +83,29 @@ ISRN 31
 
 ; Common ISR code
 isr_common_stub:
+    pusha
+    push ds
+    push es
+    push fs
+    push gs
+    mov ax, 0x10   ; Load the Kernel Data Segment descriptor!
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov eax, esp   ; Push us the stack
+    push eax
+    mov eax, handle_isr
+    call eax       ; A special call, preserves the 'eip' register
+    pop eax
+    pop gs
+    pop fs
+    pop es
+    pop ds
+    popa
+    add esp, 8     ; Cleans up the pushed error code and pushed ISR number
+    iret           ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP!
+%ifdef comment
   pusha                    ; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
 
   mov ax, ds               ; Lower 16-bits of eax = ds.
@@ -106,3 +129,4 @@ isr_common_stub:
   add esp, 8     ; Cleans up the pushed error code and pushed ISR number
   sti
   iret           ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
+%endif

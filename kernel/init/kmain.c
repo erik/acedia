@@ -22,6 +22,7 @@
 #include "console.h"
 #include "gdt.h"
 #include "idt.h"
+#include "irq.h"
 
 // kernel entry point
 
@@ -30,6 +31,7 @@ int kmain(struct multiboot *mboot_ptr) {
 
   init_gdt();
   init_idt();
+
   kinit_video(); 
 
   kputs(STARTUP_MSG);
@@ -42,7 +44,7 @@ int kmain(struct multiboot *mboot_ptr) {
     kputc((char)i);
     
   }
-
+  
   return 0x0;
 } 
 
