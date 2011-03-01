@@ -65,9 +65,7 @@ void handle_irq(regs_t* regs) {
 
   // if a handle for specific port exists, call it
   if(handle != NULL) {
-    kputs("calling handle...\n");
     handle(regs);
-    kputs("done.\n");
   }
 
 }

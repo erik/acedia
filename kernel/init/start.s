@@ -50,6 +50,7 @@ section .text
 [EXTERN kmain]
 
 start:
+  push    eax   ;; multiboot magic
   push    ebx   ;; load multiboot header location
 
   ; Execute the kernel:

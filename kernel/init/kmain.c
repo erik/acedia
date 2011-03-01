@@ -18,84 +18,46 @@
 #include <stdbool.h>
 
 #include "kernel.h"
-#include "port.h"
+#include "multiboot.h"
 #include "console.h"
 #include "gdt.h"
 #include "idt.h"
-#include "irq.h"
+
+inline void enableInterrupts() {
+  __asm__ volatile("sti");
+}
+
+inline void disableInterrupts() { 
+  __asm__ volatile("cli");
+}
 
 // kernel entry point
 
-int kmain(struct multiboot *mboot_ptr) {
-  panicking = false;
+int kmain(struct multiboot *mboot_ptr, uint32_t magic) { 
+  kassertmsg(magic = MULTIBOOT_BOOTLOADER_MAGIC, "Bad bootloader");
 
-  init_gdt();
-  init_idt();
+  kinit();
 
-  kinit_video(); 
-
-  kputs(STARTUP_MSG);
-  
   kputs("Hello, world!\nnewline?\nCARRIAGE RETURN\rsomething else \n");
 
   int i;
   for(i = ' '; i < 256; i++) {
     ktextcolor((uint8_t)(i % KBROWN_L), KBLACK);
-    kputc((uint8_t)i);
-    
+    kputc((uint8_t)i);    
   }
   
   return 0x0;
 } 
 
-
-void _khalt(int reason, const char* msg, const char* fcn, const char* file, const char* line) {
-  // recursive panic
-  if(panicking) {
-    __KHALT;
-  }
-  panicking = true;
-
-  ktextcolor(KBLACK, KRED);
-  kclear();
+// initialize everything needed for the kernel
+void kinit() {
+  disableInterrupts();
   
-#define TEN "          "
-#define TWENTY TEN TEN
-#define THIRTY TEN TWENTY
-#define FIFTY TWENTY THIRTY
+  init_gdt();
+  init_idt();
+  kinit_video();
+  
+  enableInterrupts();
 
-  /* RED SCREEN OF CERTAIN DOOM */
-  kputs("Despite your violent" " behavior, the only " TEN "  ####   ####       \n"
-        "thing you've managed" " to break so far is " TEN " ###### ######      \n"
-        "my heart.           " THIRTY                     " #############      \n"
-                                               FIFTY      "  ###########       \n"
-                                               FIFTY      "   #########        \n"
-                                               FIFTY      "    #######         \n"
-                                               FIFTY      "     #####          \n"
-                                               FIFTY      "      ###           \n"
-                                               FIFTY      "       #            \n");
-#undef TEN
-#undef TWENTY
-#undef THIRTY
-#undef FIFTY
-
-  kputs(STOP_MSG "\n\n");
-
-  /* this is why I need printf :( */
-
-  if(reason == UNHANDLED_EXCEPTION) {
-    kputs("KERNEL PANIC: ");
-    kputs(msg);
-    kputs("\n  Called from "); kputs(fcn); kputs(" ("); kputs(file); kputs(":"); kputs(line); kputs(")\n");
-  } else if(reason == ASSERTION_FAILED) {
-    kputs("ASSERTION FAILED: ");
-    kputs(msg);
-    kputs("\n  in "); kputs(fcn); kputs(" ("); kputs(file); kputs(":"); kputs(line); kputs(")\n");
-  } else if(reason == UNKNOWN_FAILURE) {
-    kputs("UNKNOWN FAILURE: ");
-    kputs(msg);
-  }
-
-  __KHALT;
-
+  kputs(STARTUP_MSG);
 }

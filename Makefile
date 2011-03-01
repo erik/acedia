@@ -39,7 +39,9 @@ $(BIN_DIRS):
 	@make -s -C $@
 
 clean:
-	rm $(shell find . -name "*.o")
+	rm -f $(shell find . -name "*~")
+	rm -f $(shell find . -name "*.o")
+	rm -rf $(BUILDDIR)/include
 
 distclean: clean
 	rm -rf $(BUILDDIR)
