@@ -34,7 +34,7 @@ inline void disableInterrupts() {
 // kernel entry point
 
 int kmain(struct multiboot *mboot_ptr, uint32_t magic) { 
-  kassertmsg(magic = MULTIBOOT_BOOTLOADER_MAGIC, "Bad bootloader");
+  kassertmsg(magic == MULTIBOOT_BOOTLOADER_MAGIC, "Bad bootloader");
 
   kinit();
 
