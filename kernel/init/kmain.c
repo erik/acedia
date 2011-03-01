@@ -40,8 +40,8 @@ int kmain(struct multiboot *mboot_ptr) {
 
   int i;
   for(i = ' '; i < 256; i++) {
-    ktextcolor(i % KBROWN_L, KBLACK);
-    kputc((char)i);
+    ktextcolor((uint8_t)(i % KBROWN_L), KBLACK);
+    kputc((uint8_t)i);
     
   }
   

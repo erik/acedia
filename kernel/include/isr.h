@@ -29,7 +29,7 @@ void init_isr();
 // handle an interrupt
 void handle_isr(regs_t* regs);
 
-extern char* isr_exceptions[32];
+extern char isr_exceptions[32][32];
 
 /* defined in isr.s */
 extern void isr0();

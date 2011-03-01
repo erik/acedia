@@ -70,7 +70,7 @@ void *memset(void *d, int c, size_t n) {
   uint8_t* dst = (uint8_t*)d;
 
   for(i = 0; i < n; ++i) {
-    dst[i] = c;
+    dst[i] = (uint8_t)c;
   }
 
   return dst;

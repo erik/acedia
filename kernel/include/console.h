@@ -18,6 +18,8 @@
 #ifndef _CONSOLE_H_
 #define _CONSOLE_H_
 
+#include <stdint.h>
+
 #define VID_ROWS 25
 #define VID_COLS 80
 
@@ -46,13 +48,13 @@ typedef enum kConsoleColor {
 
 
 typedef struct cursor {
-  int x;
-  int y;
+  uint32_t x;
+  uint32_t y;
 } cursor_t;
 
 extern cursor_t g_csr;
 extern int g_text_attrib;
-extern unsigned short* g_textmem;
+extern uint16_t* g_textmem;
 
 /* init text vide mode */
 void kinit_video();
@@ -64,7 +66,7 @@ void kclear();
 void kscroll();
 
 /* write character */
-void kputc(unsigned char c);
+void kputc(uint8_t c);
 
 /* write string */
 void kputs(const char* c);
@@ -76,10 +78,10 @@ void kputs(const char* c);
 void kupdatecursor();
 
 /* set the fore/back ground color */
-void ktextcolor(unsigned char fore, unsigned char back);
+void ktextcolor(uint8_t fore, uint8_t back);
 
 /* set the (x,y) coordinate of the cursor */
-void ksetcursorxy(int x, int y);
+void ksetcursorxy(uint32_t x, uint32_t y);
 
 
 #endif /* _CONSOLE_H_ */

@@ -32,7 +32,7 @@ void kinit_video() {
 
 void kclear() {
   g_csr.x = g_csr.y = 0;
-  unsigned short c = ' ' | g_text_attrib << 8;
+  uint16_t c = (uint16_t)(' ' | g_text_attrib << 8);
 
   int i;
   for(i = 0; i < VID_ROWS * VID_COLS; ++i) {
@@ -42,7 +42,7 @@ void kclear() {
 
 void kscroll() {
   int i;
-  unsigned short c = ' ' | g_text_attrib << 8;
+  uint16_t c = (uint16_t)(' ' | g_text_attrib << 8);
 
   int max = VID_COLS * (VID_ROWS - 1);
   
@@ -61,8 +61,8 @@ void kscroll() {
   }
 }
 
-void kputc(unsigned char c) {
-  unsigned short let = c | g_text_attrib << 8;
+void kputc(uint8_t c) {
+  uint16_t let = (uint16_t)(c | g_text_attrib << 8);
   
   if(g_csr.x >= VID_COLS) {
     g_csr.x = 0;
@@ -88,7 +88,7 @@ void kputc(unsigned char c) {
 void kputs(const char* c) {
   char x;
   while((x = *c++) != '\0') {
-    kputc(x);
+    kputc((uint8_t)x);
   }
 }
 
@@ -98,16 +98,16 @@ void kupdatecursor() {
   temp = g_csr.y * VID_COLS + g_csr.x;
 
   koutportb(0x3D4, 14);
-  koutportb(0x3D5, temp >> 8);
+  koutportb(0x3D5, (uint8_t)(temp >> 8));
   koutportb(0x3D4, 15);
-  koutportb(0x3D5, temp);
+  koutportb(0x3D5, (uint8_t)temp);
 }
 
 void ktextcolor(unsigned char fore, unsigned char back) {
   g_text_attrib = ((back << 4) | (fore & 0x0F));
 }
 
-void ksetcursorxy(int x, int y) {
+void ksetcursorxy(uint32_t x, uint32_t y) {
   g_csr.x = x;
   g_csr.y = y;
   kupdatecursor();

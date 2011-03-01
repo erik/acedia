@@ -17,7 +17,7 @@
 #include "isr.h"
 #include "console.h"
 
-char* isr_exceptions[32] = { 
+char isr_exceptions[32][32] = { 
   "Division by 0",
   "Debug exception",
   "Non maskable interrupt",

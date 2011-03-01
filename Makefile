@@ -8,6 +8,14 @@ AR := ar
 ARFLAGS := rcs
 
 CFLAGS := -Wall -Werror -Wextra -pedantic -std=c99 -O3
+
+CFLAGS += -Wunused -Wformat=2 -Winit-self -Wmissing-include-dirs -Wstrict-overflow=4
+CFLAGS += -Wfloat-equal -Wwrite-strings -Wconversion -Wundef -Wtrigraphs 
+CFLAGS += -Wunused-parameter -Wunknown-pragmas -Wcast-align -Wswitch-enum 
+CFLAGS += -Waggregate-return -Wmissing-noreturn -Wmissing-format-attribute -Wpacked 
+CFLAGS += -Wredundant-decls -Wunreachable-code -Winline -Winvalid-pch 
+CFLAGS += -Wdisabled-optimization -Wsystem-headers -Wbad-function-cast
+
 CFLAGS +=  -nostdinc -fno-builtin -fno-stack-protector -m32 -ffreestanding
 CFLAGS += -Wno-unused-parameter -Wno-unused-function
 CFLAGS += -I$(BUILDDIR)/include
@@ -17,7 +25,6 @@ LDFLAGS += -nostdlib -melf_i386
 
 BIN_DIRS := kernel
 LIB_DIRS := libc
-TEST_DIRS := test
 
 export BUILDDIR CC LD AS CFLAGS LDFLAGS AR ARFLAGS
 

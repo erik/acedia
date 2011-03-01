@@ -52,7 +52,7 @@ void uninstall_irq_handler(int port) {
 
 
 void handle_irq(regs_t* regs) {
-  int port = regs->int_no - 32;
+  unsigned int port = regs->int_no - 32;
   irq_handle handle = irq_handles[port];
   
   /* send EOI to slave if necessary */
