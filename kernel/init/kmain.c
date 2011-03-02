@@ -40,10 +40,10 @@ int kmain(struct multiboot *mboot_ptr, uint32_t magic) {
 
   kputs("Hello, world!\nnewline?\nCARRIAGE RETURN\rsomething else \n");
 
-  int i;
-  for(i = ' '; i < 256; i++) {
-    ktextcolor((uint8_t)(i % KBROWN_L), KBLACK);
-    kputc((uint8_t)i);    
+  uint8_t i;
+  for(i = ' '; i < 255; i++) {
+    ktextcolor(i % KBROWN_L, KBLACK);
+    kputc(i);    
   }
   
   return 0x0;

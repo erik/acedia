@@ -13,7 +13,7 @@ CFLAGS += -Wunused -Wformat=2 -Winit-self -Wmissing-include-dirs -Wstrict-overfl
 CFLAGS += -Wfloat-equal -Wwrite-strings -Wconversion -Wundef -Wtrigraphs 
 CFLAGS += -Wunused-parameter -Wunknown-pragmas -Wcast-align -Wswitch-enum 
 CFLAGS += -Waggregate-return -Wmissing-noreturn -Wmissing-format-attribute -Wpacked 
-CFLAGS += -Wredundant-decls -Wunreachable-code -Winline -Winvalid-pch 
+CFLAGS += -Wredundant-decls -Wunreachable-code -Winline -Winvalid-pch
 CFLAGS += -Wdisabled-optimization -Wsystem-headers -Wbad-function-cast
 
 CFLAGS +=  -nostdinc -fno-builtin -fno-stack-protector -m32 -ffreestanding

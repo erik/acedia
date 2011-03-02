@@ -72,6 +72,9 @@ void kputc(uint8_t c) {
   if(c == '\n') {
     g_csr.x = 0;
     g_csr.y++;
+  } else if(c == '\b' && g_csr.x--) {
+    kputc(' ');
+    g_csr.x--;
   } else if(c == '\r') {
     g_csr.x = 0;
   } else if(c >= ' ') {
@@ -91,6 +94,49 @@ void kputs(const char* c) {
     kputc((uint8_t)x);
   }
 }
+
+// recursive function to actually print the digits, used by kputnum
+static void __kputnum(int32_t num, uint8_t base) {
+  uint8_t digits[16] = "0123456789ABCDEF";
+
+  int32_t dig = (num % base);
+    
+  if((num /= base) > 0) {
+    __kputnum(num, base);
+  }
+  
+  kputc(digits[dig]);
+}
+
+// FIXME: when num is an int64_t, undefined error from linker
+void kputnum(int32_t num, uint8_t base) {
+
+  if(base > 16 || base <= 1) {
+    kputs("Unsupported base\n");
+    return;
+  }
+
+  if(num < 0) {
+    kputc('-');
+    kputnum(-num, base);
+    return;
+  }
+
+  switch(base) {
+  case 8:
+    kputc('0');
+    break;
+  case 16:
+    kputs("0x");
+    break;
+  default:
+    break;
+  }
+
+  __kputnum(num, base);
+
+}
+
 
 void kupdatecursor() {
   unsigned temp;

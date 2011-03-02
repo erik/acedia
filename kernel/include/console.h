@@ -71,6 +71,12 @@ void kputc(uint8_t c);
 /* write string */
 void kputs(const char* c);
 
+/* write number in specific base */
+void kputnum(int32_t num, uint8_t base);
+
+inline void kputhex(int32_t _num) { kputnum(_num, 16); }
+inline void kputdec(int32_t _num) { kputnum(_num, 10); }
+
 /* formatted print */
 //void kprintf(char*f
 
