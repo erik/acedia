@@ -22,6 +22,8 @@
 #include "console.h"
 #include "gdt.h"
 #include "idt.h"
+#include "irq.h"
+#include "keyboard.h"
 
 inline void enableInterrupts() {
   __asm__ volatile("sti");
@@ -45,9 +47,18 @@ int kmain(struct multiboot *mboot_ptr, uint32_t magic) {
     ktextcolor(i % KBROWN_L, KBLACK);
     kputc(i);    
   }
+
+  while(true) {
+    __asm__ ("nop");
+  }
   
-  return 0x0;
+  //return 0x0;
 } 
+
+void keyhandle(struct regs* regs) {
+  uint8_t scancode = inb(0x60);
+  kputdec(scancode);
+}
 
 // initialize everything needed for the kernel
 void kinit() {
@@ -56,6 +67,7 @@ void kinit() {
   init_gdt();
   init_idt();
   kinit_video();
+  kinit_keyboard();
   
   enableInterrupts();
 
