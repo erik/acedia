@@ -20,19 +20,19 @@
 /* read / write data on ports */
 
 /* write a byte on a port */
-void koutportb(unsigned short port, unsigned char value) {
+void outb(uint16_t port, uint8_t value) {
   __asm__ volatile ("outb %1, %0" : : "dN" (port), "a" (value));
 }
 
 /* read a u8int from a port */
-unsigned char kinportb(unsigned short port) {
+uint8_t inb(uint16_t port) {
   unsigned char ret;
   __asm__ volatile("inb %1, %0" : "=a" (ret) : "dN" (port));
   return ret;
 }
 
 /* read a u16int from a port */
-unsigned short kinportw(unsigned short port) {
+uint16_t inw(uint16_t port) {
   unsigned short ret;
   __asm__ volatile ("inw %1, %0" : "=a" (ret) : "dN" (port));
   return ret;

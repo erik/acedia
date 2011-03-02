@@ -18,8 +18,10 @@
 #ifndef _PORT_H_
 #define _PORT_H_
 
-void koutportb(unsigned short port, unsigned char val);
-unsigned char kinportb(unsigned short port);
-unsigned short kinportw(unsigned short port);
+#include <stdint.h>
+
+void outb(uint16_t port, uint8_t val);
+uint8_t inb(uint16_t port);
+uint16_t inw(uint16_t port);
 
 #endif /* _PORT_H_ */

@@ -143,10 +143,10 @@ void kupdatecursor() {
 
   temp = g_csr.y * VID_COLS + g_csr.x;
 
-  koutportb(0x3D4, 14);
-  koutportb(0x3D5, (uint8_t)(temp >> 8));
-  koutportb(0x3D4, 15);
-  koutportb(0x3D5, (uint8_t)temp);
+  outb(0x3D4, 14);
+  outb(0x3D5, (uint8_t)(temp >> 8));
+  outb(0x3D4, 15);
+  outb(0x3D5, (uint8_t)temp);
 }
 
 void ktextcolor(unsigned char fore, unsigned char back) {
