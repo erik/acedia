@@ -72,9 +72,17 @@ void kputc(uint8_t c) {
   if(c == '\n') {
     g_csr.x = 0;
     g_csr.y++;
-  } else if(c == '\b' && g_csr.x--) {
-    kputc(' ');
-    g_csr.x--;
+  } else if(c == '\b') {
+    if(g_csr.x == 0) {
+      // at top left, so nothing to be done
+      if(g_csr.y == 0) {
+        return;
+      } else {
+        g_csr.x = VID_COLS;
+        g_csr.y--;
+      }
+    }
+    g_textmem[g_csr.y * VID_COLS + --g_csr.x] = (uint16_t)(' ' | g_text_attrib << 8);
   } else if(c == '\r') {
     g_csr.x = 0;
   } else if(c >= ' ') {
