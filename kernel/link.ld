@@ -3,6 +3,7 @@ ENTRY(start)
 SECTIONS {
    
   . = 0x100000;
+  _kernel_start = .;
 
   .mbheader : {
     *(.mbheader)
@@ -27,7 +28,7 @@ SECTIONS {
     . = ALIGN(4096);
   }
 
-  end = .;
+  _kernel_end = .;
 }
 
 

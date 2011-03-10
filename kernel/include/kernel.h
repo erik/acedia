@@ -23,13 +23,23 @@
 #include "multiboot.h"
 #include "panic.h"
 
-#define STARTUP_MSG "Acedia version 0.01, compiled on " __DATE__ " at " __TIME__ "\n\n\n"
+extern unsigned int _kernel_start;
+extern unsigned int _kernel_end;
 
-inline void enableInterrupts();
-inline void disableInterrupts();
+#define STARTUP_MSG "Acedia version 0.01, compiled on " __DATE__ " at " __TIME__ "\n"
+
+inline void enableInterrupts() {
+  __asm__ volatile("sti");
+}
+
+inline void disableInterrupts() { 
+  __asm__ volatile("cli");
+}
 
 void kinit();
 
 int kmain(struct multiboot*, uint32_t);
+
+struct multiboot* multiboot_ptr;
 
 #endif /* _KERNEL_H_ */

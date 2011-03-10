@@ -13,11 +13,6 @@
 ; OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-;
-; boot.s -- Kernel start location. Also defines multiboot header.
-; Based on Bran's kernel development tutorial file start.asm
-;
-
 MBOOT_PAGE_ALIGN    equ 1<<0
 MBOOT_MEM_INFO      equ 1<<1
 MBOOT_HEADER_MAGIC  equ 0x1BADB002 ; Multiboot Magic value
@@ -28,10 +23,6 @@ MBOOT_CHECKSUM      equ -(MBOOT_HEADER_MAGIC + MBOOT_HEADER_FLAGS)
 
 [GLOBAL mboot]
 
-[EXTERN code]                   ; Start of the '.text' section.
-[EXTERN bss]                    ; Start of the .bss section.
-[EXTERN end]                    ; End of the last loadable section.
-
 section .mbheader
 align 4
 mboot:
@@ -40,12 +31,9 @@ mboot:
   dd  MBOOT_CHECKSUM
 
 section .text
-  dd  mboot                     ; Location of this descriptor
-  dd  code                      ; Start of kernel '.text' (code) section.
-  dd  bss                       ; End of kernel '.data' section.
-  dd  end                       ; End of kernel.
-  dd  start                     ; Kernel entry point (initial EIP).
 
+STACKSIZE equ 0x4000  ; 16K for stack
+        
 [GLOBAL start]
 [EXTERN kmain]
 
@@ -59,3 +47,8 @@ start:
   cli           ;; disable interrupts 
   hlt           ;; halt cpu
   jmp $         ;; just in case
+
+section .bss
+align 4
+stack:
+   resb STACKSIZE ; setup 16k for stack space

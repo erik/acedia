@@ -24,28 +24,23 @@
 #include "idt.h"
 #include "irq.h"
 #include "keyboard.h"
+#include "page.h"
 
-inline void enableInterrupts() {
-  __asm__ volatile("sti");
-}
-
-inline void disableInterrupts() { 
-  __asm__ volatile("cli");
-}
 
 // kernel entry point
 
 int kmain(struct multiboot *mboot_ptr, uint32_t magic) { 
   kassertmsg(magic == MULTIBOOT_BOOTLOADER_MAGIC, "Bad bootloader");
+  multiboot_ptr = mboot_ptr;
 
   kinit();
-
-  kputs("Hello, world!\nnewline?\nCARRIAGE RETURN\rsomething else \n");
-
+  
   while(true) {
-    __asm__ ("nop");
-    kputc(wait_key());
-    __asm__ ("nop");
+    uint8_t c = wait_key();
+    
+    if(c) {
+      kputc(c);
+    }
   }
   
   //return 0x0;
@@ -62,6 +57,8 @@ void kinit() {
   
   init_gdt();
   init_idt();
+  kinit_paging();
+
   kinit_video();
   kinit_keyboard();
   

@@ -58,12 +58,7 @@ typedef struct regs {
     unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;  /* pushed by 'pusha' */
     unsigned int int_no, err_code;    /* our 'push byte #' and ecodes do this */
     unsigned int eip, cs, eflags, useresp, ss;   /* pushed by the processor automatically */ 
-} /*
-  uint32_t ds;                  // Data segment selector
-  uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
-  uint32_t int_no, err_code;    // Interrupt number and error code (if applicable)
-  uint32_t eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
-  } */regs_t; 
+} regs_t; 
 
 
 #endif /* _IDT_H_ */

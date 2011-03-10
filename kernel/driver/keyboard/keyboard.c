@@ -65,7 +65,7 @@ void key_interrupt_handle(struct regs* regs) {
 
   if(stack_ptr >= KEY_BUFFER_STACK_SIZE) {
     // I GAVE YOU 0x1000 CHANCES, AND YOU JUST STOOD ME UP. FUCK YOUR STACK.
-    stack_ptr = 0;
+    stack_ptr = -1;
   } else {
     key_buffer[stack_ptr == -1 ? ++stack_ptr : stack_ptr++] = key;
   }

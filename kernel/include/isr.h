@@ -23,11 +23,17 @@
 #include "kernel.h"
 #include "idt.h"
 
+typedef void (*isr_handle)(regs_t*);
+
 // set up ISRs
 void init_isr();
 
 // handle an interrupt
 void handle_isr(regs_t* regs);
+
+// install an isr handler
+void install_isr(int port, isr_handle fcn);
+
 
 extern char isr_exceptions[32][32];
 

@@ -53,6 +53,8 @@ char isr_exceptions[32][32] = {
   "Reserved",
   };
 
+static isr_handle isr_handles[256] = {NULL};
+
 void init_isr() {
   
   idt_set_gate(0, (uint32_t)isr0 , 0x08, 0x8E);
@@ -92,9 +94,18 @@ void init_isr() {
 
 void handle_isr(regs_t* regs) {
 
-  // exception
-  if(regs->int_no < 32) {
-    kpanic(isr_exceptions[regs->int_no]);
+  unsigned int port = regs->int_no;
+
+  if(isr_handles[port]) {
+    isr_handles[port](regs);
+  } else {
+    // exception
+    if(port < 32) {
+      kpanic(isr_exceptions[port]);
+    }
   }
 }
 
+void install_isr(int port, isr_handle fcn) {
+  isr_handles[port] = fcn;
+}
