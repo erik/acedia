@@ -11,14 +11,16 @@ CFLAGS += -Iinclude/ -Idriver/include -Imemory/include -I$(BUILDDIR)/$(SUBDIR)/i
 LDFLAGS := -Tlink.ld -melf_i386 $(BUILDDIR)/lib/libc.a
 ASFLAGS := -felf
 
-all: kernel $(HEADERS)
+all: kernel headers
 
 kernel: $(SOURCES)
 	@ $(LD) -o kernel $(SOURCES) $(LDFLAGS)
 	@ mv kernel $(BUILDDIR)/bin
 
+headers: $(HEADERS)
+	@ echo "  CP headers => build/$(SUBDIR)"
+
 $(HEADERS):
-	@ echo "  CP $(SUBDIR)/$@ => build/$@"
 	@ cp $@ $(BUILDDIR)/include
 
 %.s.o: %.s

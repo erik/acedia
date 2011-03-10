@@ -9,12 +9,13 @@ SUBDIR := libc
 
 CFLAGS += -I$(BUILDDIR)/include
 
-all: $(HEADERS) $(STATIC)
+all: headers $(STATIC)
 	@ echo "  CP $(STATIC) => build/lib"
 	@ cp $(STATIC) $(BUILDDIR)/lib
 
+headers: $(HEADERS)
+	@ echo "  CP headers => build/$(SUBDIR)"
 $(HEADERS):
-	@ echo "  CP $(SUBDIR)/$@ => build/$@"
 	@ cp $@ $(BUILDDIR)/include
 
 $(STATIC): $(SOURCES)

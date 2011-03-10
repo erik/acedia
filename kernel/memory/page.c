@@ -153,10 +153,22 @@ void page_fault(regs_t* regs) {
 
   // Output an error message.
   kputs("Page fault! (");
-  if (present) {kputs("present ");}
-  if (rw) {kputs("read-only ");}
-  if (us) {kputs("user-mode ");}
-  if (reserved) {kputs("reserved ");}
+  if(present) {
+    kputs("P");
+  }
+  if(rw) {
+    kputs("R");
+  } else {
+    kputs("W");
+  }
+  if (us) {
+    kputs("U");
+  } else {
+    kputs("K");
+  }
+  if(reserved) {
+    kputs("Res");
+  }
   kputs(") at ");
   kputhex((int)faulting_address);
   kputs("\n");
