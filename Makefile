@@ -7,7 +7,7 @@ AR := ar
 
 ARFLAGS := rcs
 
-CFLAGS := -Wall -Werror -Wextra -pedantic -std=c99 -O3
+CFLAGS := -Wall -Wextra -pedantic -std=c99 -O3
 
 CFLAGS += -Wunused -Wformat=2 -Winit-self -Wmissing-include-dirs -Wstrict-overflow=4
 CFLAGS += -Wfloat-equal -Wwrite-strings -Wconversion -Wundef -Wtrigraphs 
@@ -37,6 +37,13 @@ $(LIB_DIRS):
 $(BIN_DIRS):
 	@echo "make" $@
 	@make -s -C $@
+
+# just in case 
+gcc:
+	@make all "CC = gcc"
+
+clang:
+	@make all "CC = clang"
 
 clean:
 	rm -f $(shell find . -name "*~")
@@ -68,4 +75,4 @@ mkdirs:
 	@ mkdir -p $(BUILDDIR)/lib
 	@ mkdir -p $(BUILDDIR)/iso
 
-.PHONY: $(BIN_DIRS) $(LIB_DIRS) clean distclean mkdirs qemu bochs iso
+.PHONY: $(BIN_DIRS) $(LIB_DIRS) clean distclean mkdirs qemu bochs iso all 

@@ -79,8 +79,7 @@ void free_frame(page_t *page) {
     clear_frame(frame); // Frame is now free again.
     page->frame = 0x0; // Page now doesn't have a frame.
   }
-} 
-
+}
 
 page_t *get_page(uint32_t address, int make, page_directory_t *dir)
 {
@@ -101,11 +100,9 @@ page_t *get_page(uint32_t address, int make, page_directory_t *dir)
   else {
     return 0;
   }
-} 
+}
 
-
-
-void kinit_paging() {
+void init_paging() {
   end_mem = multiboot_ptr->mem_upper * 1024;
 
   frames = (unsigned int*) kmalloc(end_mem / 0x1000, 0);
@@ -121,13 +118,13 @@ void kinit_paging() {
   current_directory = kernel_directory;
   
   unsigned int i = 0;
-  while (i <= (unsigned int)&_kernel_end) {
+  while (i < (unsigned int)&_kernel_end) {
     // set kernel code to unwritable
     alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
     i += 0x1000;
   }
   
-  // register paeg_fault handler
+  // register page_fault handler
   install_isr(14, page_fault);
 
   // set page directory

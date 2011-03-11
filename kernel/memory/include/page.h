@@ -30,7 +30,7 @@ typedef struct page_directory {
 
 page_directory_t *current_directory, *kernel_directory;
 
-void kinit_paging();
+void init_paging();
 
 page_t *get_page(uint32_t addr, int make, page_directory_t* dir);
 
