@@ -35,16 +35,6 @@ int kmain(struct multiboot *mboot_ptr, uint32_t magic) {
 
   kinit();
   
-  int* x = alloc(4);
-  if(x) {
-    kputhex((int)x);
-    kputs(" found some memory, bitches\n");
-  }
-  if((x = alloc(4))) {
-    kputhex((int)x);
-    kputs(" found some more, bitches\n");
-  }
-
   while(true) {
     uint8_t c = wait_key();
     

@@ -17,6 +17,8 @@
 #include "console.h"
 #include "port.h"
 
+#include <stdarg.h>
+
 cursor_t g_csr;
 int g_text_attrib;
 unsigned short* g_textmem;
@@ -165,4 +167,8 @@ void ksetcursorxy(uint32_t x, uint32_t y) {
   g_csr.x = x;
   g_csr.y = y;
   kupdatecursor();
+}
+
+void kprintf(const char* fmt, ...) {
+  
 }

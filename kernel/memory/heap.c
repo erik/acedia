@@ -70,15 +70,51 @@ void* alloc(unsigned int size) {
         set_used((void*)hdr, hdr->next, size);
         return hdr + 1;
       } else if (sizeh >= tot_size) { // too big, split
-        mem_header_t* next = (mem_header_t*)(hdr + tot_size);
-        set_used((void*)hdr, next, size);
+        // set next pointer as tot_size bytes ahead
+        unsigned int naddr = (unsigned)hdr + tot_size; /* avoid a warning about a pointer casting */
+        mem_header_t* next = (mem_header_t*)naddr;
         set_free(next, hdr->next, sizeh - tot_size);
+        set_used((void*)hdr, next, size);
         return hdr + 1;
       }
-      // found it, bitches
     }
   }
 
   // No memory
   return NULL;
+}
+
+/* potentially problematic: doesn't free backwards.
+ * [ a (used) | b (used) ]
+ * if b is freed after a, the map will look like [a (free) | b (free) ]
+ * instead of  [ a (free) ]
+ *
+ * implement a doubly linked list by adding a pointer to previous block?
+ */
+void free(void* ptr) {
+  // avoid NULL ptrs
+  if(!ptr) {
+    return;
+  }
+
+  unsigned int hdr_pos = (unsigned)((char*)ptr - sizeof(mem_header_t));
+  mem_header_t* hdr = (mem_header_t*)hdr_pos;
+
+  // trying to free memory that isn't allocated, or not part of the heap
+  if(hdr->magic != MAGIC_USED) {
+    return;
+  } else {
+    unsigned int free_size = hdr->size;
+    mem_header_t* next_ptr = hdr->next;
+
+    mem_header_t* adj = hdr->next;
+    // combine adjacent free mem blocks
+    if(adj->magic == MAGIC_FREE) {
+      next_ptr = adj->next;
+      free_size += adj->size + sizeof(mem_header_t);
+    }
+
+    set_free(hdr, next_ptr, free_size);
+  }
+
 }

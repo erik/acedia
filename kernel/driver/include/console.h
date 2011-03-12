@@ -78,7 +78,7 @@ inline void kputhex(int32_t _num) { kputnum(_num, 16); }
 inline void kputdec(int32_t _num) { kputnum(_num, 10); }
 
 /* formatted print */
-//void kprintf(char*f
+void kprintf(const char* fmt, ...);
 
 /* update the cursor position */
 void kupdatecursor();
