@@ -2,6 +2,7 @@
 #define _HEAP_H_
 
 #include <stddef.h>
+#include <string.h>
 
 #include "kernel.h"
 
@@ -16,6 +17,9 @@ void* kmalloc(unsigned int size, int align);
 /* higher level memory allocation  */
 void* alloc(unsigned int size);
 
+/* resize an allocated pointer */
+void* realloc(void* ptr, size_t size);
+
 /* free memory allocated with alloc */
 void free(void* ptr);
 
@@ -28,6 +32,7 @@ void init_memory();
 typedef struct mem_header {
   unsigned int magic;
   struct mem_header *next; /* pointer to next header */
+  struct mem_header *prev; /* pointer to previous header */
   unsigned int size;
 } mem_header_t;
 
