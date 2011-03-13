@@ -16,6 +16,7 @@
 
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "kernel.h"
 #include "multiboot.h"
@@ -26,6 +27,7 @@
 #include "keyboard.h"
 #include "page.h"
 
+extern char* tokptr;
 
 // kernel entry point
 
@@ -34,7 +36,7 @@ int kmain(struct multiboot *mboot_ptr, uint32_t magic) {
   multiboot_ptr = mboot_ptr;
 
   kinit();
-  
+
   while(true) {
     uint8_t c = wait_key();
     

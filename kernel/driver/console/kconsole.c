@@ -168,7 +168,3 @@ void ksetcursorxy(uint32_t x, uint32_t y) {
   g_csr.y = y;
   kupdatecursor();
 }
-
-void kprintf(const char* fmt, ...) {
-  
-}
