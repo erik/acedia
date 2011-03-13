@@ -53,7 +53,7 @@ static void set_free(void* pointer, mem_header_t* next, mem_header_t* prev, unsi
 
 void init_memory() {  
   _kmalloc(0x1000, 1, heap_ptr);
-
+  
   set_free(heap_ptr, NULL, NULL, 0x1000 - sizeof(mem_header_t));
 }
 

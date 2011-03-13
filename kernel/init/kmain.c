@@ -26,6 +26,7 @@
 #include "irq.h"
 #include "keyboard.h"
 #include "page.h"
+#include "time.h"
 
 // kernel entry point
 
@@ -59,8 +60,9 @@ void kinit() {
   init_idt();
   init_paging();
   init_memory();
-
   kinit_video();
+  init_time();
+
   kinit_keyboard();
   
   enableInterrupts();
