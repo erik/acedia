@@ -35,18 +35,6 @@ int kmain(struct multiboot *mboot_ptr, uint32_t magic) {
 
   kinit();
 
-  int i;
-  int*x;
-  for(i = 0; i < 0xF; ++i) {
-    x = alloc(sizeof(x));
-    int* x2 = realloc(x, sizeof(x) * 2);
-    free(x);
-    free(x2);
-  }
-
-  kputhex((int)x);
-
-
   while(true) {
     uint8_t c = wait_key();
     
