@@ -6,7 +6,7 @@
 
 #include "heap.h"
 
-#define TICKS_PER_SEC 10
+#define TICKS_PER_SEC 1000
 #define NUM_TIME_HANDLES 0x100
 
 typedef void (*time_handle)(struct regs* r, unsigned ticks);
