@@ -17,10 +17,12 @@ void timer_handler(struct regs *r) {
   unsigned i;
   for(i = 0; i < NUM_TIME_HANDLES; ++i) {
     time_handle fcn = handles[i];
+
     // break if no function present
-    if(!fcn) {
-      break;
+    if(fcn == NULL) {
+      continue;
     }
+
     fcn(r, timer_ticks); 
   }
 }
@@ -45,4 +47,8 @@ int install_time_handler(time_handle fcn) {
 
 void uninstall_time_handler(int index) {
   handles[index] = NULL;
+}
+
+unsigned get_ticks() {
+  return timer_ticks;
 }

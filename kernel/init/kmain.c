@@ -27,6 +27,8 @@
 #include "keyboard.h"
 #include "page.h"
 #include "time.h"
+#include "thread.h"
+#include "pong.h"
 
 // kernel entry point
 
@@ -36,15 +38,13 @@ int kmain(struct multiboot *mboot_ptr, uint32_t magic) {
 
   kinit();
 
-  while(true) {
-    uint8_t c = wait_key();
-    
-    if(c) {
-      kputc(c);
-    }
-  }
-  
-  //return 0x0;
+  kputs("Press any key to begin Pong game...\n");
+  wait_key();
+
+  // fuck yeah, pong
+  pong();
+
+  return 0x0;
 } 
 
 void keyhandle(struct regs* regs) {
@@ -60,12 +60,13 @@ void kinit() {
   init_idt();
   init_paging();
   init_memory();
-  kinit_video();
   init_time();
+  //  init_threading();
 
-  kinit_keyboard();
-  
-  enableInterrupts();
+  enableInterrupts();  
+
+  kinit_video();
+  kinit_keyboard();  
 
   kputs(STARTUP_MSG);
 }

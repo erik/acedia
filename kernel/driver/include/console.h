@@ -65,6 +65,9 @@ void kclear();
 /* scroll screen if needed*/
 void kscroll();
 
+/* write character at specific x, y location */
+void kputcxy(uint8_t x, uint32_t, uint32_t);
+
 /* write character */
 void kputc(uint8_t c);
 

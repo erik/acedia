@@ -63,6 +63,14 @@ void kscroll() {
   }
 }
 
+void kputcxy(uint8_t c, uint32_t x, uint32_t y) {
+  uint16_t let = (uint16_t)(c | g_text_attrib << 8);
+
+  g_textmem[y * VID_COLS + x] = let;
+
+  return;
+}
+
 void kputc(uint8_t c) {
   uint16_t let = (uint16_t)(c | g_text_attrib << 8);
   

@@ -53,7 +53,6 @@ idt_ptr_t   idt_ptr;
 
 // returned to handle_isr, handle_irq, contains register information
 typedef struct regs {
-
     unsigned int gs, fs, es, ds;      /* pushed the segs last */
     unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;  /* pushed by 'pusha' */
     unsigned int int_no, err_code;    /* our 'push byte #' and ecodes do this */

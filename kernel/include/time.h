@@ -5,6 +5,7 @@
 #include "port.h"
 
 #include "heap.h"
+#include "kernel.h"
 
 #define TICKS_PER_SEC 1000
 #define NUM_TIME_HANDLES 0x100
@@ -17,5 +18,8 @@ void init_time();
 // return the index of the function, -1 on fail
 int install_time_handler(time_handle fcn);
 void uninstall_time_handler(int index);
+
+// return the number of ticks since boot
+unsigned get_ticks(void);
 
 #endif /* _TIME_H_ */
